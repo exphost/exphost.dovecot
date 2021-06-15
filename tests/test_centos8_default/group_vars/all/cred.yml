@@ -1,0 +1,2 @@
+ansible_user: test
+ansible_password: password

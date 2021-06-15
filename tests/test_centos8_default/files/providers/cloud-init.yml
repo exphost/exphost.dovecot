@@ -1,0 +1,14 @@
+- name: libvirt
+  debug:
+    msg: "Jeste provisione libvirte"
+
+- include_role:
+    name: exphost.create_user
+  vars:
+    ansible_user: provision
+    ansible_password: provision
+    ignore_errors: True
+    ignore_unreachable: True
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user

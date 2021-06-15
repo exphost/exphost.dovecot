@@ -1,0 +1,36 @@
+apps_dovecot:
+  dovecot:
+    dovecot:
+      enabled: True
+      type: exphost.dovecot
+      install: standalone
+      configs:
+        vmail:
+          path: /var/lib/vmail
+          uid: postfix
+          gid: postfix
+        ssl:
+          key: /etc/dovecot/ssl/privkey.pem
+          cert: /etc/dovecot/ssl/fullchain.pem
+        ldap:
+          hosts: 127.0.0.1
+          base: "ou=People,dc=some,dc=example,dc=domain,dc=xyz"
+          bind_dn: "uid=robert,ou=People,dc=some,dc=example,dc=domain,dc=xyz"
+          bind_pw: "robertpass"
+      ssls:
+        - domains:
+          - ca.some.domain.xyz
+          keyserver: test-0
+          dest:
+            dir: /etc/ssl/generated/ca
+          provider:
+            type: selfsigned
+          ca: True
+        - domains:
+          - dovecot.some.domain.xyz
+          keyserver: test-0
+          dest:
+            dir: /etc/dovecot/ssl
+          provider:
+            type: ownca
+            ca: ca.some.domain.xyz

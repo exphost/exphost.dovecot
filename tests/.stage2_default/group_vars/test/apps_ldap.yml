@@ -1,0 +1,40 @@
+apps_ldap:
+  ldap:
+    port389:
+      type: exphost.port389
+      enabled: True
+      endpoints:
+        ldap:
+          address: test-0
+          port: 389
+      configs:
+        machineName: "some.example.domain.xyz"
+        adminUser: "admin"
+        adminPassword: "adminpass"
+        port: 389
+        identifier: ldap
+        suffix: "dc=some,dc=example,dc=domain,dc=xyz"
+        dmUser: "cm=Directory Manager"
+        dmPassword: "dmpass"
+      content:
+        - dn: "uid=mariola,ou=People,dc=some,dc=example,dc=domain,dc=xyz"
+          objectClass:
+            - organizationalPerson
+            - person
+            - mailrecipient
+          attributes:
+            cn: "mariola"
+            sn: "kowalska"
+            mail: "mariola@domena6.ru"
+            userPassword: "mariolapass"
+        - dn: "uid=robert,ou=People,dc=some,dc=example,dc=domain,dc=xyz"
+          objectClass:
+            - organizationalPerson
+            - person
+            - mailrecipient
+          attributes:
+            cn: "robert"
+            sn: "nowak"
+            mail: "robert@domena1.ru"
+            mail: "robert@domena2.ru"
+            userPassword: "robertpass"
