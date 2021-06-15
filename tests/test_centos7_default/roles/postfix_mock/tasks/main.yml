@@ -1,0 +1,14 @@
+- block:
+  - name: create postfix user
+    user:
+      name: postfix
+  - name: create vmail dir
+    file:
+      path: "/var/lib/vmail"
+      state: directory
+      mode: 0700
+      owner: postfix
+      group: postfix
+      setype: mail_spool_t
+  become: True
+  become_user: root

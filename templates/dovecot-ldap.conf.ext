@@ -1,0 +1,9 @@
+hosts = {{ app.value.dovecot.configs.ldap.hosts }}
+dn = {{ app.value.dovecot.configs.ldap.bind_dn }}
+dnpass = {{ app.value.dovecot.configs.ldap.bind_pw }}
+auth_bind = yes
+base = {{ app.value.dovecot.configs.ldap.base }}
+user_attrs = mail=user
+user_filter = (mail=%u)
+pass_attrs = mail=user,userPassword=password
+pass_filter = (mail=%u)

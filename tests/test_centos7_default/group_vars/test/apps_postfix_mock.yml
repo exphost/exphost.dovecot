@@ -1,0 +1,7 @@
+apps_postfix_mock:
+  postfix:
+    priority: 4
+    postfix:
+      type: postfix_mock
+      enabled: True
+

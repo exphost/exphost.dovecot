@@ -1,0 +1,34 @@
+iac:
+  name: test-{{ lookup('env', 'ROLENAME')|default('no_role', true)|replace('.','-') }}-{{ lookup('env', 'TESTCASE')|default('no_test_case', true) }}-{{ lookup('env', 'BUILD_NUMBER')|default('no_build_number', true) }}
+  hosts:
+    test:
+      count: 1
+      roles:
+        - test
+      networks:
+        - bridge: br105
+          #mac_addresses_mask: "52:54:11:01:00"
+      provider:
+        name: exphost.instances_libvirt
+        configs:
+          uri: "{{ lookup('env', 'QEMU_URI')|default('qemu:///system', true) }}"
+      type: small
+      disks:
+        - name: sda
+          pool: default
+          #source: "https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-2009.qcow2"
+          #base_name: CentOS-7-x86_64-GenericCloud-2009.qcow2
+          #base_name: CentOS-8-GenericCloud-8.2.2004-20200611.2.x86_64.qcow2
+          base_name: "{{ image_base_name }}"
+      user_data:
+        users:
+          - default
+          - name: provision
+            groups: sudo
+            shell: /bin/bash
+            sudo: ['ALL=(ALL) NOPASSWD:ALL']
+        ssh_pwauth: True
+        chpasswd:
+          list: |
+            provision:provision
+          expire: False

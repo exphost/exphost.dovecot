@@ -1,0 +1,25 @@
+---
+galaxy_info:
+  role_name: dovecot
+  author: TORGiren
+  description: Create dovecot instance
+  company: exphost
+  license: MIT
+  min_ansible_version: 2.8
+  platforms:
+    - name: el
+      versions:
+        - 7
+        - 8
+  galaxy_tags:
+    - fabsible
+    - dovecot
+    - mail
+
+allow_duplicates: true
+dependencies:
+  - role: exphost.ssl_generator
+    vars:
+      ssls: "{{ app.value.dovecot.ssls }}"
+      user: "{{ app.value.dovecot.user | default({}) }}"
+    when: app.value.dovecot.ssls | default(False)

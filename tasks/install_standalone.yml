@@ -1,0 +1,30 @@
+---
+- block:
+    - name: install dovecot
+      yum:
+        name: dovecot
+        state: installed
+
+    - name: copy dovecot config
+      template:
+        src: dovecot.conf
+        dest: /etc/dovecot/dovecot.conf
+        mode: 0640
+      notify: restart dovecot
+
+    - name: copy ldap config
+      template:
+        src: dovecot-ldap.conf.ext
+        dest: /etc/dovecot/conf.d/dovecot-ldap.conf.ext
+        mode: 0640
+      notify: restart dovecot
+
+    - name: flush handlers
+      meta: flush_handlers
+
+    - name: start and enable dovecot
+      service:
+        name: dovecot
+        state: started
+        enabled: true
+  become: true
